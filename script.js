@@ -35,7 +35,7 @@ function init() {
 function AfficherDIVsMotsClesRestants() {
     //En fonction du contenu de MotsClesRestants et MotsChoisis
     //Réafficher le contenu des deux divs pour les mots clés
-    DIV_MotsClesRestants.innerHTML = 'Mots Cles : ';
+    DIV_MotsClesRestants.innerHTML = '<font style="cursor: pointer;" title="Réinitialiser" onDblClick="BUTTON_OnClick_Reset()">Mots Cles : </font>';
     for (var i = 0; i < TousLesMotsClesRestants.length; i++) {
         var motCle = MotsClesRestants[i];
         if (motCle != null){
@@ -66,10 +66,21 @@ function BUTTON_OnClick(){
     debug_log("BUTTON_OnClick " + this.index);
 }
 
-function BUTTON_OnClick_Restants() {
-    debug_log("BUTTON_OnClick_Restants " + this.index);
+function BUTTON_OnClick_Restants() { 
+    MotsChoisis[this.index] = MotsClesRestants[this.index]; 
+    MotsClesRestants[this.index] = null;
+    AfficherDIVsMotsClesRestants();
+    // debug_log("BUTTON_OnClick_Restants " + this.index);
 }
 
 function BUTTON_OnClick_Choisis() {
-    debug_log("BUTTON_OnClick_Choisis " + this.index);
+    MotsClesRestants[this.index] = MotsChoisis[this.index];
+    MotsChoisis[this.index] = null;
+    AfficherDIVsMotsClesRestants();
+    // debug_log("BUTTON_OnClick_Choisis " + this.index);
+}
+
+function BUTTON_OnClick_Reset() {
+    init();
+    AfficherDIVsMotsClesRestants();
 }
