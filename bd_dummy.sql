@@ -1,38 +1,43 @@
--- Insertion de données factices
+-- Insertion dummy data
 
 -- Table tbl_objets
 INSERT INTO tbl_objets (id, qte, label, estConteneur, estContenuDans) VALUES
-(1, 10, 'Boîte en carton', TRUE, NULL),
-(2, 5, 'Sac à dos', TRUE, NULL),
-(3, 1, 'Bouteille d\'eau', FALSE, 2),
-(4, 3, 'Clé USB', FALSE, 2),
-(5, 20, 'Crayon', FALSE, 1),
-(6, 2, 'Ordinateur portable', FALSE, NULL),
-(7, 15, 'Livre', FALSE, 1),
-(8, 1, 'Trousse', TRUE, 2),
-(9, 4, 'Stylo', FALSE, 8),
-(10, 1, 'Casque audio', FALSE, 2);
+(1, 1, 'Caisse-1', TRUE, NULL),
+(2, 1, 'Tournevis', FALSE, 1),
+(3, 1, 'Scie', FALSE, 1),
+(4, 1, 'Caisse-2', TRUE, NULL),
+(5, 1, 'Sachet', TRUE, 4),
+(6, 10, 'Clous', FALSE, 5),
+(7, 1, 'Perceuse', FALSE, 4);
 
 -- Table tbl_motCle
 INSERT INTO tbl_motCle (id, label) VALUES
-(1, 'électronique'),
-(2, 'papeterie'),
-(3, 'conteneur'),
-(4, 'transport'),
-(5, 'boisson'),
-(6, 'lecture');
+(1, 'Métal'),
+(2, 'Bleu'),
+(3, 'Plastique'),
+(4, 'Vert'),
+(5, 'Rouge'),
+(6, 'Bois');
 
 -- Table objets_motCle (correspondances)
 INSERT INTO objets_motCle (objets_id, motCle_id) VALUES
-(1, 3), -- boîte en carton → conteneur
-(1, 4), -- boîte en carton → transport
-(2, 3), -- sac à dos → conteneur
-(2, 4), -- sac à dos → transport
-(3, 5), -- bouteille d'eau → boisson
-(4, 1), -- clé USB → électronique
-(5, 2), -- crayon → papeterie
-(6, 1), -- ordinateur portable → électronique
-(7, 6), -- livre → lecture
-(8, 3), -- trousse → conteneur
-(9, 2), -- stylo → papeterie
-(10, 1); -- casque audio → électronique
+(1, 6),  -- Caisse-1 - Bois
+(2, 1),  -- Tournevis - Métal
+(2, 2),  -- Tournevis - Bleu
+(3, 1),  -- Scie - Métal
+(3, 5),  -- Scie - Rouge
+(4, 6),  -- Caisse-2 - Bois
+(5, 3),  -- Sachet - Plastique
+(5, 4),  -- Sachet - Vert
+(6, 1),  -- Clous - Métal
+(7, 1),  -- Perceuse - Métal
+(7, 2);  -- Perceuse - Bleu
+
+-- SELECT *
+-- FROM objets_motcle
+-- WHERE motCle_id = 1
+-- AND objets_id IN (
+--     SELECT objets_id 
+--     FROM objets_motcle 
+--     WHERE motCle_id = 2
+-- );
