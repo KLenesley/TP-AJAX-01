@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "motCle": "Métal"
+    },
+    {
+        "id": 2,
+        "motCle": "Plastique"
+    },
+    {
+        "id": 3,
+        "motCle": "Rouge"
+    },
+    {
+        "id": 4,
+        "motCle": "Vert"
+    },
+    {
+        "id": 5,
+        "motCle": "Bleu"
+    },
+    {
+        "id": 6,
+        "motCle": "Outil"
+    }
+]

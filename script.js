@@ -1,5 +1,6 @@
 var debug, DIV_MotsClesRestants, DIV_MotsChoisis;
 
+var TousLesMotsCles = [];
 var MotsClesRestants = [];
 var MotsChoisis = [];
 
@@ -9,22 +10,36 @@ function BODY_OnLoad() {
     debug = document.getElementById("debug");
     DIV_MotsClesRestants = document.getElementById("DIV_MotsClesRestants");
     DIV_MotsChoisis = document.getElementById("DIV_MotsChoisis");
-    init(); // initialiser le mécanisme spécifique de l'application
-    AfficherDIVsMotsClesRestants();
+    chargerMotsCles().then(function () {
+            init(); // initialiser le mécanisme spécifique de l'application
+            AfficherDIVsMotsClesRestants();
+        });
 }
 
 function debug_log(message) {
     debug.value += message + "\n";
 }
 
-var TousLesMotsClesRestants = ['Métal', 'Plastique', 'Rouge', 'Vert', 'Bleu', 'Outil']; // tableau des boutons de l'application
-var MotsClesRestants = [];
-var MotsChoisis = [];
+function chargerMotsCles() {
+    // récupère le catalogue de mots clés avant d'initialiser l'interface
+    return fetch("motsCles.json")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error(response.status + " " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            TousLesMotsCles = data.map(function (item) {
+                return item.motCle;
+            });
+        });
+}
 
 function init() {
     // initialiser les tableaux des boutons
-    for (var i = 0; i < TousLesMotsClesRestants.length; i++) {
-        MotsClesRestants[i] = TousLesMotsClesRestants[i];
+    for (var i = 0; i < TousLesMotsCles.length; i++) {
+        MotsClesRestants[i] = TousLesMotsCles[i];
         MotsChoisis[i] = null;
     }
 
@@ -36,7 +51,7 @@ function AfficherDIVsMotsClesRestants() {
     //En fonction du contenu de MotsClesRestants et MotsChoisis
     //Réafficher le contenu des deux divs pour les mots clés
     DIV_MotsClesRestants.innerHTML = '<font style="cursor: pointer;" title="Réinitialiser" onDblClick="BUTTON_OnClick_Reset()">Mots Cles : </font>';
-    for (var i = 0; i < TousLesMotsClesRestants.length; i++) {
+    for (var i = 0; i < TousLesMotsCles.length; i++) {
         var motCle = MotsClesRestants[i];
         if (motCle != null){
             // DIV_MotsClesRestants.innerHTML += MotsClesRestants[i] + " ";
@@ -49,7 +64,7 @@ function AfficherDIVsMotsClesRestants() {
         }
     }
     DIV_MotsChoisis.innerHTML = 'Mots Choisis : ';
-    for (var i = 0; i < TousLesMotsClesRestants.length; i++) {
+    for (var i = 0; i < TousLesMotsCles.length; i++) {
         var motCle = MotsChoisis[i];
         if (motCle != null){
             const button = document.createElement("button");
