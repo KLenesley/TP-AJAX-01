@@ -24,14 +24,14 @@ function chargerMotsCles() {
     // récupère le catalogue de mots clés avant d'initialiser l'interface
     return fetch("motsCles.json")
         .then(function (response) {
-            if (!response.ok) {
-                throw new Error(response.status + " " + response.statusText);
-            }
+            // if (!response.ok) {
+            //     throw new Error(response.status + " " + response.statusText);
+            // }
             return response.json();
         })
         .then(function (data) {
             TousLesMotsCles = data.map(function (item) {
-                return item.motCle;
+                return item;
             });
         });
 }
@@ -56,8 +56,7 @@ function AfficherDIVsMotsClesRestants() {
         if (motCle != null){
             // DIV_MotsClesRestants.innerHTML += MotsClesRestants[i] + " ";
             const button = document.createElement("button");
-            button.innerHTML = motCle;
-            button.textContent = motCle;
+            button.textContent = motCle.label;
             button.index = i;
             button.onclick = BUTTON_OnClick_Restants;
             DIV_MotsClesRestants.appendChild(button);
@@ -68,8 +67,7 @@ function AfficherDIVsMotsClesRestants() {
         var motCle = MotsChoisis[i];
         if (motCle != null){
             const button = document.createElement("button");
-            button.innerHTML = motCle;
-            button.textContent = motCle;
+            button.textContent = motCle.label;
             button.index = i;
             button.onclick = BUTTON_OnClick_Choisis;
             DIV_MotsChoisis.appendChild(button);
@@ -82,18 +80,22 @@ function BUTTON_OnClick(){
 }
 
 function BUTTON_OnClick_Restants() { 
+    var id = TousLesMotsCles[this.index].id;
     MotsChoisis[this.index] = MotsClesRestants[this.index]; 
     MotsClesRestants[this.index] = null;
     AfficherDIVsMotsClesRestants();
-    // debug_log("BUTTON_OnClick_Restants " + this.index);
+    debug_log("BUTTON_OnClick_Restants " + this.index + " id=" + id);
+    debug_log("MotsChoisis=" + MotsChoisis);
 }
 
 function BUTTON_OnClick_Choisis() {
+    var id = TousLesMotsCles[this.index].id;
     MotsClesRestants[this.index] = MotsChoisis[this.index];
     MotsChoisis[this.index] = null;
     AfficherDIVsMotsClesRestants();
-    // debug_log("BUTTON_OnClick_Choisis " + this.index);
+    debug_log("BUTTON_OnClick_Choisis " + this.index + " id=" + id);
 }
+
 
 function BUTTON_OnClick_Reset() {
     init();
