@@ -6,11 +6,10 @@ try {
 	]);
 
 	// Préparation et exécution de la requête
-	$stmt = $dbh->prepare('SELECT * FROM tbl_motcle');
+	$stmt = $dbh->prepare('SELECT * FROM tbl_motCle');
 	$stmt->execute();
 
 	echo json_encode($stmt->fetchAll());
 } catch (Exception $e) {
-    http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }

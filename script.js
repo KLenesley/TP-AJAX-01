@@ -40,16 +40,29 @@ function chargerMotsCles() {
     // récupère le catalogue de mots clés avant d'initialiser l'interface
     return fetch("motsCles.php")
         .then(function (response) {
-            // if (!response.ok) {
-            //     throw new Error(response.status + " " + response.statusText);
-            // }
+            if (!response.ok) {
+                throw new Error(response.status + " " + response.statusText);
+            }
             return response.json();
         })
         .then(function (data) {
+            // // Check if there's an error in the response
+            // if (data.error) {
+            //     throw new Error("PHP Error: " + data.error);
+            // }
+            // // Check if data is an array
+            // if (!Array.isArray(data)) {
+            //     console.error("Expected array but got:", data);
+            //     throw new Error("Invalid data format: expected array");
+            // }
             TousLesMotsCles = data.map(function (item) {
                 return item;
             });
-        });
+        })
+    // .catch(function (error) {
+    //     debug_log("Error loading motsCles: " + error.message);
+    //     console.error("Error loading motsCles:", error);
+    // });
 }
 
 function init() {
@@ -60,56 +73,58 @@ function init() {
     }
 }
 
-    function AfficherDIVsMotsClesRestants() {
-        //En fonction du contenu de MotsClesRestants et MotsChoisis
-        //Réafficher le contenu des deux divs pour les mots clés
-        DIV_MotsClesRestants.innerHTML = '<font style="cursor: pointer;" title="Réinitialiser" onDblClick="BUTTON_OnClick_Reset()">Mots Cles : </font>';
-        for (var i = 0; i < TousLesMotsCles.length; i++) {
-            var motCle = MotsClesRestants[i];
-            if (motCle != null) {
-                // DIV_MotsClesRestants.innerHTML += MotsClesRestants[i] + " ";
-                const button = document.createElement("button");
-                button.textContent = motCle.label;
-                button.index = i;
-                button.onclick = BUTTON_OnClick_Restants;
-                DIV_MotsClesRestants.appendChild(button);
-            }
-        }
-        DIV_MotsChoisis.innerHTML = 'Mots Choisis : ';
-        for (var i = 0; i < TousLesMotsCles.length; i++) {
-            var motCle = MotsChoisis[i];
-            if (motCle != null) {
-                const button = document.createElement("button");
-                button.textContent = motCle.label;
-                button.index = i;
-                button.onclick = BUTTON_OnClick_Choisis;
-                DIV_MotsChoisis.appendChild(button);
-            }
+function AfficherDIVsMotsClesRestants() {
+    //En fonction du contenu de MotsClesRestants et MotsChoisis
+    //Réafficher le contenu des deux divs pour les mots clés
+    DIV_MotsClesRestants.innerHTML = '<font style="cursor: pointer;" title="Réinitialiser" onDblClick="BUTTON_OnClick_Reset()">Mots Cles : </font>';
+    for (var i = 0; i < TousLesMotsCles.length; i++) {
+        var motCle = MotsClesRestants[i];
+        if (motCle != null) {
+            // DIV_MotsClesRestants.innerHTML += MotsClesRestants[i] + " ";
+            const button = document.createElement("button");
+            button.textContent = motCle.label;
+            button.index = i;
+            button.onclick = BUTTON_OnClick_Restants;
+            DIV_MotsClesRestants.appendChild(button);
         }
     }
-
-    function BUTTON_OnClick() {
-        debug_log("BUTTON_OnClick " + this.index);
+    DIV_MotsChoisis.innerHTML = 'Mots Choisis : ';
+    for (var i = 0; i < TousLesMotsCles.length; i++) {
+        var motCle = MotsChoisis[i];
+        if (motCle != null) {
+            const button = document.createElement("button");
+            button.textContent = motCle.label;
+            button.index = i;
+            button.onclick = BUTTON_OnClick_Choisis;
+            DIV_MotsChoisis.appendChild(button);
+        }
     }
+}
 
-    function BUTTON_OnClick_Restants() {
-        var id = TousLesMotsCles[this.index].id;
-        MotsChoisis[this.index] = MotsClesRestants[this.index];
-        MotsClesRestants[this.index] = null;
-        AfficherDIVsMotsClesRestants();
-        debug_log("BUTTON_OnClick_Restants " + this.index + " id=" + id); x
-    }
+function BUTTON_OnClick() {
+    debug_log("BUTTON_OnClick " + this.index);
+}
 
-    function BUTTON_OnClick_Choisis() {
-        var id = TousLesMotsCles[this.index].id;
-        MotsClesRestants[this.index] = MotsChoisis[this.index];
-        MotsChoisis[this.index] = null;
-        AfficherDIVsMotsClesRestants();
-        debug_log("BUTTON_OnClick_Choisis " + this.index + " id=" + id);
-    }
+function BUTTON_OnClick_Restants() {
+    var id = TousLesMotsCles[this.index].id;
+    MotsChoisis[this.index] = MotsClesRestants[this.index];
+    MotsClesRestants[this.index] = null;
+    AfficherDIVsMotsClesRestants();
+    debug_log("BUTTON_OnClick_Restants " + this.index + " id=" + id);
+    // afficher tout les id des boutons choisis
+
+}
+
+function BUTTON_OnClick_Choisis() {
+    var id = TousLesMotsCles[this.index].id;
+    MotsClesRestants[this.index] = MotsChoisis[this.index];
+    MotsChoisis[this.index] = null;
+    AfficherDIVsMotsClesRestants();
+    debug_log("BUTTON_OnClick_Choisis " + this.index + " id=" + id);
+}
 
 
-    function BUTTON_OnClick_Reset() {
-        init();
-        AfficherDIVsMotsClesRestants();
-    }
+function BUTTON_OnClick_Reset() {
+    init();
+    AfficherDIVsMotsClesRestants();
+}
