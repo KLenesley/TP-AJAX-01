@@ -3,6 +3,7 @@ var debug, DIV_MotsClesRestants, DIV_MotsChoisis;
 var TousLesMotsCles = [];
 var MotsClesRestants = [];
 var MotsChoisis = [];
+var TousLesObjets = [];
 
 function BODY_OnLoad() {
     // déclancher une seule fois au chargement de la page HTML
@@ -11,8 +12,11 @@ function BODY_OnLoad() {
     DIV_MotsClesRestants = document.getElementById("DIV_MotsClesRestants");
     DIV_MotsChoisis = document.getElementById("DIV_MotsChoisis");
     chargerMotsCles().then(function () {
+        return chargerObjets();
+    }).then(function () {
         init(); // initialiser le mécanisme spécifique de l'application
         AfficherDIVsMotsClesRestants();
+        AfficherTableauObjets();
     });
 }
 
@@ -59,10 +63,35 @@ function chargerMotsCles() {
                 return item;
             });
         })
-    // .catch(function (error) {
-    //     debug_log("Error loading motsCles: " + error.message);
-    //     console.error("Error loading motsCles:", error);
-    // });
+        .catch(function (error) {
+            debug_log("Erreur au chargement de motsCles: " + error.message);
+            console.error("Erreur au chargement de motsCles:", error);
+        });
+}
+
+function chargerObjets() {
+    // récupère la liste des objets depuis la base de données
+    return fetch("objets.php")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error(response.status + " " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // if (data.error) {
+            //     throw new Error("PHP Error: " + data.error);
+            // }
+            // if (!Array.isArray(data)) {
+            //     console.error("Expected array but got:", data);
+            //     throw new Error("Invalid data format: expected array");
+            // }
+            TousLesObjets = data;
+        })
+        .catch(function (error) {
+            debug_log("Erreur au chargement de objets: " + error.message);
+            console.error("Erreur au chargement de objets:", error);
+        });
 }
 
 function init() {
@@ -101,6 +130,24 @@ function AfficherDIVsMotsClesRestants() {
     }
 }
 
+function AfficherTableauObjets() {
+    var tbody = document.querySelector("#TABLE_Objets tbody");
+    tbody.innerHTML = "";
+
+    for (var i = 0; i < TousLesObjets.length; i++) {
+        var objet = TousLesObjets[i];
+        var tr = document.createElement("tr");
+
+        tr.innerHTML = "<td>" + objet.id + "</td>" +
+            "<td>" + objet.qte + "</td>" +
+            "<td>" + objet.label + "</td>" +
+            "<td>" + objet.estConteneur + "</td>" +
+            "<td>" + objet.estContenuDans + "</td>";
+
+        tbody.appendChild(tr);
+    }
+}
+
 function BUTTON_OnClick() {
     debug_log("BUTTON_OnClick " + this.index);
 }
@@ -112,7 +159,8 @@ function BUTTON_OnClick_Restants() {
     AfficherDIVsMotsClesRestants();
     debug_log("BUTTON_OnClick_Restants " + this.index + " id=" + id);
     // afficher tout les id des boutons choisis
-
+    var ids = MotsChoisis.filter(function(m) { return m != null; }).map(function(m) { return m.id; });
+    debug_log("Mots Choisis : " + ids.join(", ") + " nbr : " + ids.length);
 }
 
 function BUTTON_OnClick_Choisis() {
