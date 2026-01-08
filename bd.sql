@@ -10,6 +10,7 @@ CREATE TABLE tbl_objets (
     label VARCHAR(50) NOT NULL,
     estConteneur BOOLEAN NOT NULL DEFAULT FALSE,
     estContenuDans INT,
+    img VARCHAR(255),
     FOREIGN KEY (estContenuDans) REFERENCES tbl_objets(id)
 );
 
@@ -32,3 +33,10 @@ CREATE TABLE objets_motCle (
 -- FROM tbl_objets
 -- JOIN objets_motCle ON tbl_objets.id = objets_motCle.objets_id
 -- JOIN tbl_motCle ON objets_motCle.motCle_id = tbl_motCle.id
+
+-- SELECT tbl_objets.id, tbl_objets.label
+-- FROM tbl_objets
+-- JOIN objets_motCle ON tbl_objets.id = objets_motCle.objets_id
+-- WHERE objets_motCle.motCle_id IN (1, 2);
+-- GROUP BY tbl_objets.id
+-- HAVING COUNT(DISTINCT objets_motCle.motCle_id) = 2;
