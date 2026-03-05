@@ -155,7 +155,8 @@ function AfficherTableauObjets() {
             "<td>" + objet.qte + "</td>" +
             "<td>" + objet.label + "</td>" +
             "<td>" + objet.estConteneur + "</td>" +
-            "<td>" + objet.estContenuDans + "</td>";
+            "<td>" + objet.estContenuDans + "</td>" +
+            "<td>" + objet.img + "</td>";
 
         if (objet.id === ObjetSelectionneId) {
             tr.classList.add("selected-row");
@@ -188,6 +189,7 @@ function afficherDetailsObjet(objet) {
     contenu += "<p><strong>Quantité :</strong> " + objet.qte + "</p>";
     contenu += "<p><strong>Est conteneur :</strong> " + objet.estConteneur + "</p>";
     contenu += "<p><strong>Contenu dans :</strong> " + objet.estContenuDans + "</p>";
+    contenu += "<p><strong>Image :</strong> <image src='img/" + objet.img + "' </image> </p>";
 
     DETAIL_Content.innerHTML = contenu;
 }
@@ -201,6 +203,7 @@ function BUTTON_OnClick_Restants() {
     MotsChoisis[this.index] = MotsClesRestants[this.index];
     MotsClesRestants[this.index] = null;
     AfficherDIVsMotsClesRestants();
+
     debug_log("BUTTON_OnClick_Restants " + this.index + " id=" + id);
     const ids = MotsChoisis.filter(m => m).map(m => m.id);
     debug_log(`Mots Choisis : ${ids.join(", ")} nbr : ${ids.length}`);
@@ -216,6 +219,7 @@ function BUTTON_OnClick_Choisis() {
     MotsClesRestants[this.index] = MotsChoisis[this.index];
     MotsChoisis[this.index] = null;
     AfficherDIVsMotsClesRestants();
+    
     debug_log("BUTTON_OnClick_Choisis " + this.index + " id=" + id);
     const ids = MotsChoisis.filter(m => m).map(m => m.id);
     debug_log(`Mots Choisis : ${ids.join(", ")} nbr : ${ids.length}`);

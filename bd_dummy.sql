@@ -1,14 +1,14 @@
 -- Insertion dummy data
 
 -- Table tbl_objets
-INSERT INTO tbl_objets (id, qte, label, estConteneur, estContenuDans) VALUES
-(1, 1, 'Caisse-1', TRUE, NULL),
-(2, 1, 'Tournevis', FALSE, 1),
-(3, 1, 'Scie', FALSE, 1),
-(4, 1, 'Caisse-2', TRUE, NULL),
-(5, 1, 'Sachet', TRUE, 4),
-(40, 10, 'Clous', FALSE, 5),
-(15, 1, 'Perceuse', FALSE, 4);
+INSERT INTO tbl_objets (id, qte, label, estConteneur, estContenuDans, img) VALUES
+(1, 1, 'Caisse-1', TRUE, NULL, NULL),
+(2, 1, 'Tournevis', FALSE, 1, '2.jpg'),
+(3, 1, 'Scie', FALSE, 1, '3.jpg'),
+(4, 1, 'Caisse-2', TRUE, NULL, NULL),
+(5, 1, 'Sachet', TRUE, 4, NULL),
+(40, 10, 'Clous', FALSE, 5, NULL),
+(15, 1, 'Perceuse', FALSE, 4, NULL);
 
 -- Table tbl_motCle
 INSERT INTO tbl_motCle (id, label) VALUES
