@@ -147,6 +147,54 @@ hr {
     font-weight: 600;
 }
 
+#DIV_CRUD_Form {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 8px 12px;
+    align-items: center;
+}
+
+#DIV_CRUD_Form label {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+#DIV_CRUD_Form input[type="text"],
+#DIV_CRUD_Form input[type="number"] {
+    border: 1px solid var(--stroke);
+    border-radius: 6px;
+    background: #0b141e;
+    color: var(--text);
+    padding: 8px 10px;
+    outline: none;
+}
+
+#DIV_CRUD_Form input[type="text"]:focus,
+#DIV_CRUD_Form input[type="number"]:focus {
+    border-color: var(--accent);
+}
+
+#DIV_CRUD_Actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#DIV_CRUD_Actions button {
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--stroke);
+    border-radius: 6px;
+    background: linear-gradient(180deg, #1b2836, #15202d);
+    color: var(--text);
+    cursor: pointer;
+}
+
+#DIV_CRUD_Actions button:hover {
+    border-color: var(--accent);
+}
+
 #DETAIL_Content p {
     margin: 4px 0;
     color: var(--text);

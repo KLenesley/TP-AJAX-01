@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS tbl_objets;
 
 -- Création de la table des objets
 CREATE TABLE tbl_objets (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     qte INT NOT NULL DEFAULT 1,
     label VARCHAR(50) NOT NULL,
     estConteneur BOOLEAN NOT NULL DEFAULT FALSE,
@@ -16,7 +16,7 @@ CREATE TABLE tbl_objets (
 
 -- Création de la table des mots-clés
 CREATE TABLE tbl_motCle (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     label VARCHAR(50) NOT NULL
 );
 

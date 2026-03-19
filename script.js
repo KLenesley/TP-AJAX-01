@@ -239,3 +239,15 @@ function BUTTON_OnClick_Reset() {
         AfficherTableauObjets();
     });
 }
+
+function Form_Create() {
+}
+
+function Form_Reset() {
+}
+
+function Form_Update() {
+}
+
+function Form_Delete() {
+}
